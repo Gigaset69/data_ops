@@ -11,6 +11,12 @@ import glob
 
 logging.basicConfig(level=logging.INFO)
 
+# Calculer la consommation totale de la semaine
+df_weekly_total = calculer_consommation_totale_semaine(df, col_date, col_donnees)
+ 
+# Afficher la consommation totale de la semaine
+st.subheader("Consommation totale de la semaine")
+st.write(df_weekly_total)
 
 LAG_N_DAYS: int = 7
 
