@@ -10,17 +10,7 @@ col_donnees: str = "consommation"
 cols: List[str] = [col_date, col_donnees]
 fic_export_data: str = "data/interim/data.csv"
 
-def calculer_consommation_totale_semaine(df: pd.DataFrame, col_date: str, col_donnees: str) -> pd.DataFrame:
-    # Assurez-vous que la colonne de dates est au format datetime
-    df[col_date] = pd.to_datetime(df[col_date])
-    # Grouper les données par semaine et calculer la somme pour chaque semaine
-    df_weekly_total = df.groupby(df[col_date].dt.to_period('W'))[col_donnees].sum().reset_index()
-    # Supprimer la colonne de dates avant de réinitialiser l'index
-    del df_weekly_total[col_date]
-    # Réinitialiser l'index
-    df_weekly_total = df_weekly_total.groupby(df_weekly_total.index // 4).sum().reset_index()
-    return df_weekly_total
-    
+
 def load_data():
     list_fic: list[str] = [Path(e) for e in glob.glob("data/raw/*json")]
     list_df: list[pd.DataFrame] = []
