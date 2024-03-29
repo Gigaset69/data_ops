@@ -4,8 +4,6 @@ import os
 import glob
 from pathlib import Path
 import json
-import matplotlib.pyplot as plt
-
 
 col_date: str = "date_heure"
 col_donnees: str = "consommation"
@@ -54,26 +52,10 @@ def export_data(df: pd.DataFrame):
     df.to_csv(fic_export_data, index=False)
 
 
-def plot_weekly_consumption(df: pd.DataFrame):
-    df['Semaine'] = df[col_date].dt.week
-    consommation_par_semaine = df.groupby('Semaine')[col_donnees].sum()
-
-    plt.figure(figsize=(10, 6))
-    consommation_par_semaine.plot(kind='bar', color='blue')
-    plt.title('Consommation par semaine')
-    plt.xlabel('Semaine de l\'année')
-    plt.ylabel('Consommation totale')
-    plt.xticks(rotation=45)
-    plt.grid(axis='y', linestyle='--', alpha=0.7)
-    plt.tight_layout()
-    plt.show()
-
-
 def main_process():
     df: pd.DataFrame = load_data()
     df = format_data(df)
     export_data(df)
-    plot_weekly_consumption(df)
 
 
 if __name__ == "__main__":
